@@ -2,15 +2,19 @@
 <html>
   <head>
     <style>
-      button {
-        height: 30px;
+      input {
+        margin-bottom: 8px;
         width: 30px;
-        outline: none;
+      }
+      .popup {
+        width: 170px;
       }
     </style>
   </head>
-  <body>
-    <button id="changeColor"></button>
-    <script src="popup.js"></script>
+  <body class="popup">
+    <span>Timer Value (minutes):</span> 
+    <input type="number" name="time" min="1"><br>
+    <button id="startTimer">Start Productive Time</button>
   </body>
+  <script src="popup.js"></script>
 </html>
