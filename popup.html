@@ -4,17 +4,22 @@
     <style>
       input {
         margin-bottom: 8px;
-        width: 30px;
+        width: 50px;
       }
       .popup {
-        width: 170px;
+        width: 200px;
+      }
+      body {
+        
+        vertical-align: middle;
+        text-align: center;
       }
     </style>
   </head>
   <body class="popup">
     <span>Timer Value (minutes):</span> 
-    <input type="number" name="time" min="1"><br>
-    <button id="startTimer">Start Productive Time</button>
+    <input type="number" id="time" min="1"><br>
+    <button id="timerButton">Start Productive Time</button>
   </body>
   <script src="popup.js"></script>
 </html>
