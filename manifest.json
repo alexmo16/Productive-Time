@@ -2,7 +2,7 @@
     "name": "Productive Time",
     "version": "0.0.1",
     "description": "Productivity extension to keep productivity",
-    "permissions": ["storage", "alarms"],
+    "permissions": ["storage", "alarms", "webNavigation", "tabs"],
     "background": {
         "scripts": ["background.js"]
     },
