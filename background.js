@@ -15,6 +15,7 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
     }
 });
 
+// if timer is done, reset the UI and unlock social medias.
 chrome.alarms.onAlarm.addListener(function( alarm ) {
     chrome.storage.sync.set({'time': {'value': 0}, 'isDisable': {'value': false}}, function() {});
 });
