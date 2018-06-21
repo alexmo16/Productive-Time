@@ -20,11 +20,13 @@ window.onload = function() {
 
     startButton.onclick = function(element) {
         var timeValue = parseInt(timeInput.value);
-        var timeObject = {'value': timeValue};
-        var buttonStateObject = {'value': true};
-        var startTimerObject = {'value': true};
-        chrome.storage.sync.set({'time': timeObject, 'isDisable': buttonStateObject, 'startTimer': startTimerObject}, function() {
-            startButton.disabled = true;
-        });
+        if (timeValue > 0) {
+            var timeObject = {'value': timeValue};
+            var buttonStateObject = {'value': true};
+            var startTimerObject = {'value': true};
+            chrome.storage.sync.set({'time': timeObject, 'isDisable': buttonStateObject, 'startTimer': startTimerObject}, function() {
+                startButton.disabled = true;
+            });
+        }
     };
 }

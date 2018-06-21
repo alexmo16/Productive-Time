@@ -2,24 +2,89 @@
 <html>
   <head>
     <style>
-      input {
-        margin-bottom: 8px;
-        width: 50px;
-      }
       .popup {
-        width: 200px;
+        width: 275px;
       }
       body {
-        
         vertical-align: middle;
         text-align: center;
+        font-size: 15px;
+        background-color: #e8e8e8;
       }
+      .inputContainer {
+        margin-top: 15px;
+        margin-bottom: 25px;
+      }
+
+      .inputContainer input {
+        width: 50px;
+        border-radius: 6px;
+        border-color: #7ec0ff;
+        color: #565c61; 
+        box-shadow: -2px 2px 12px 1px rgba(181,172,181,1);
+        text-align: center;
+        font-size: 15px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+      .inputContainer input:focus {
+        outline:0;
+      }
+
+      .inputContainer input::-webkit-outer-spin-button,
+      .inputContainer input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      .inputContainer .inputLabel {
+        padding-right: 10px;
+        color: #565c61; 
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      #timerButton {
+        background: none;
+        font-size: 15px;
+        border: 2px solid;
+        border-color: #7ec0ff;
+        border-radius: 6px;
+        border-radius: 25px;
+        color: #565c61; 
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        text-decoration: none;
+        padding: 5px;
+        margin-bottom: 30px;
+      }
+
+      #timerButton:hover {
+        background: #7ec0ff;
+      }
+
+      #timerButton:focus {
+        outline:0;
+      }
+
+      #timerButton:active {
+        background-color: #a2d1ff;
+      }
+
+      #timerButton:disabled {
+        display: none;
+      }
+
+      .credit {
+        font-size: 8px;
+      }
+
     </style>
   </head>
   <body class="popup">
-    <span>Timer Value (minutes):</span> 
-    <input type="number" id="time" min="1"><br>
+    <div class="inputContainer">
+        <span class="inputLabel">Timer Value (minutes):</span> 
+        <input type="number" id="time" min="1"><br>
+    </div>
     <button id="timerButton">Start Productive Time</button>
+    <div class="credit">Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
   </body>
   <script src="popup.js"></script>
 </html>

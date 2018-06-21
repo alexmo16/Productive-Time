@@ -1,4 +1,11 @@
-  // listener who check if the state of startTimer changed in the storage.    
+chrome.runtime.onInstalled.addListener(function(details){
+    if(details.reason == "install" || details.reason == "update"){
+        var pagesToBlock = ['facebook', 'youtube', 'instagram', 'reddit', 'twitch', 'twitter', 'pinterest', 'netflix', 'primevideo'];
+        chrome.storage.sync.set({'time': {'value': 0}, 'isDisable': {'value': false}, "toAvoid": {'value' : pagesToBlock}}, function() {});
+    }
+});
+
+// listener who check if the state of startTimer changed in the storage.    
 chrome.storage.onChanged.addListener(function(changes, namespace) {
     for (key in changes) {
         if (key == 'startTimer') {
@@ -21,11 +28,15 @@ chrome.alarms.onAlarm.addListener(function( alarm ) {
 });
 
 chrome.webNavigation.onBeforeNavigate.addListener(function(details) {
-    chrome.storage.sync.get(['time'], function(result) {
+    chrome.storage.sync.get(['time', 'toAvoid'], function(result) {
         var isProductiveTimeOn = result.time.value != 0;
-
-        if (isProductiveTimeOn && details.url.includes('facebook')) {
-            chrome.tabs.remove(details.tabId, function(){});
+        if (isProductiveTimeOn) {
+            var hostname = (new URL(details.url)).hostname;
+            result.toAvoid.value.forEach(function(site) {
+                if (hostname.includes(site)) {
+                    chrome.tabs.remove(details.tabId, function(){});
+                } 
+            });
         }
     });
 });

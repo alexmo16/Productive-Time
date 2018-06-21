@@ -1,6 +1,6 @@
 {
     "name": "Productive Time",
-    "version": "0.0.1",
+    "version": "1.0",
     "description": "Productivity extension to keep productivity",
     "permissions": ["storage", "alarms", "webNavigation", "tabs"],
     "background": {
