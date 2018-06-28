@@ -1,6 +1,7 @@
 window.onload = function() {
     var startButton = document.getElementById('timerButton');
     var timeInput = document.getElementById('time');
+
     chrome.storage.sync.get(null, function(response) {
         
         if (response.time && response.isDisable) {
@@ -29,4 +30,13 @@ window.onload = function() {
             });
         }
     };
+
+    timeInput.addEventListener("keyup", function(event) {
+        // Cancel the default action, if needed
+        event.preventDefault();
+        // Number 13 is the "Enter" key on the keyboard
+        if (event.keyCode === 13) {
+            startButton.click();
+        }
+      });
 }
