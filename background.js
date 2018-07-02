@@ -1,7 +1,7 @@
 chrome.runtime.onInstalled.addListener(function(details){
     if(details.reason == "install" || details.reason == "update"){
         var pagesToBlock = ['www.facebook.com', 'www.youtube.com', 'www.instagram.com', 'www.reddit.com', 'www.twitch.tv', 'www.twitter.com', 'www.pinterest.com', 'www.netflix.com', 'www.primevideo.com'];
-        chrome.storage.sync.set({'time': {'value': 0}, 'isDisable': {'value': false}, "toAvoid": {'value' : pagesToBlock}}, function() {});
+        chrome.storage.sync.set({'time': {'value': 0}, 'isDisable': {'value': false}, "blockedWebsites": {'value' : pagesToBlock}}, function() {});
     }
 });
 
@@ -28,15 +28,13 @@ chrome.alarms.onAlarm.addListener(function( alarm ) {
 });
 
 chrome.webNavigation.onBeforeNavigate.addListener(function(details) {
-    chrome.storage.sync.get(['time', 'toAvoid'], function(result) {
+    chrome.storage.sync.get(['time', 'blockedWebsites'], function(result) {
         var isProductiveTimeOn = result.time.value != 0;
         if (isProductiveTimeOn) {
             var hostname = (new URL(details.url)).hostname;
-            result.toAvoid.value.forEach(function(unProductiveWebsite) {
-                if (hostname == unProductiveWebsite) {
-                    chrome.tabs.remove(details.tabId, function(){});
-                } 
-            });
+            if (result.blockedWebsites.value.includes(hostname)) {
+                chrome.tabs.remove(details.tabId, function(){});
+            }
         }
     });
 });
