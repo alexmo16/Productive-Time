@@ -1,6 +1,6 @@
 {
     "name": "Productive Time",
-    "version": "1.1.0",
+    "version": "1.0.1",
     "description": "Procrastination is over once and for all!",
     "permissions": ["storage", "alarms", "webNavigation", "tabs"],
     "background": {
