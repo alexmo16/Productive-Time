@@ -1,22 +1,42 @@
 window.onload = function() {
     var startButton = document.getElementById('timerButton');
     var timeInput = document.getElementById('time');
+    var blockContainer = document.getElementById('blockContainer');
+    var blockLabel = document.getElementById('blockLabel');
+    var unblockLabel = document.getElementById('unblockLabel');
+    var switchCheckbox = document.getElementById('switchCheckbox');
 
     chrome.storage.sync.get(null, function(response) {
-        
-        if (response.time && response.isDisable) {
-            console.log(response.time.value);
-            console.log(response.isDisable.value);
-        }
-
         var timeValue = 0;
         if (response.time && ( response.time.value != "" || response.time.value != undefined )) {
             timeValue =  response.time.value;
         }
         timeInput.value = timeValue;
-        
-        var isDisable = response.isDisable ? response.isDisable.value : false;
-        startButton.disabled = isDisable;
+
+        if (response.blockedWebsites) {
+            chrome.tabs.getSelected(null, function(tab) {
+                var tabUrl = tab.url;
+                var hostname = (new URL(tabUrl)).hostname;
+                isBlocked = response.blockedWebsites.value.includes(hostname);
+                switchCheckbox.checked = isBlocked;
+                if (isBlocked) {
+                    hide(blockLabel);
+                    show(unblockLabel);
+                } else {
+                    show(blockLabel);
+                    hide(unblockLabel);
+                }
+
+                var isDisable = response.isDisable ? response.isDisable.value : false;
+                if (isDisable) {
+                    hide(startButton);
+                    hide(blockContainer);
+                } else {
+                    show(startButton);
+                    show(blockContainer);
+                }
+            });
+        }
     });
 
     startButton.onclick = function(element) {
@@ -27,8 +47,20 @@ window.onload = function() {
             var startTimerObject = {'value': true};
             chrome.storage.sync.set({'time': timeObject, 'isDisable': buttonStateObject, 'startTimer': startTimerObject}, function() {
                 startButton.disabled = true;
+                blockContainer.disabled = true;
             });
         }
+    };
+
+    switchContainer.onclick = function(element) {
+        chrome.storage.sync.get('blockedWebsites', function(response) {
+            var blockedWebsites = response.blockedWebsites.value;
+            chrome.tabs.getSelected(null, function(tab) {
+                var tabUrl = tab.url;
+                var hostname = (new URL(tabUrl)).hostname;
+                blockedWebsites.add(hostname);
+            });
+        });
     };
 
     timeInput.addEventListener("keyup", function(event) {
@@ -38,5 +70,15 @@ window.onload = function() {
         if (event.keyCode === 13) {
             startButton.click();
         }
-      });
+    });
+    
+    var show = function (elem) {
+        if (elem.classList.contains('hide')) {
+            elem.classList.remove('hide');
+        }
+    };
+
+    var hide = function (elem) {
+        elem.classList.add('hide');
+    };
 }
