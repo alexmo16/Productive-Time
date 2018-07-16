@@ -26,9 +26,26 @@ window.onload = function() {
             var buttonStateObject = {'value': true};
             var startTimerObject = {'value': true};
             chrome.storage.sync.set({'time': timeObject, 'isDisable': buttonStateObject, 'startTimer': startTimerObject}, function() {
-                startButton.disabled = true;
+                hide(startButton);
+                hide(blockContainer);
             });
         }
+    };
+
+    switchContainer.onclick = function(element) {
+        chrome.storage.sync.get('blockedWebsites', function(response) {
+            var blockedWebsites = response.blockedWebsites.value;
+            chrome.tabs.getSelected(null, function(tab) {
+                var tabUrl = tab.url;
+                var hostname = (new URL(tabUrl)).hostname;
+                if (switchCheckbox.checked && blockedWebsites.indexOf(hostname) == -1) {
+                    blockedWebsites.push(hostname);
+                } else {
+                    blockedWebsites.pop(hostname);
+                }
+                chrome.storage.sync.set({'blockedWebsites': {'value' : blockedWebsites}}, function() {});
+            });     
+        });
     };
 
     timeInput.addEventListener("keyup", function(event) {
@@ -38,5 +55,17 @@ window.onload = function() {
         if (event.keyCode === 13) {
             startButton.click();
         }
-      });
+    });
+    
+    var show = function (elem) {
+        if (elem.classList.contains('hide')) {
+            elem.classList.remove('hide');
+            elem.disabled = false;
+        }
+    };
+
+    var hide = function (elem) {
+        elem.classList.add('hide');
+        elem.disabled = true;
+    };
 }
