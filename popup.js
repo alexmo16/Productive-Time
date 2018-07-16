@@ -62,7 +62,7 @@ window.onload = function() {
                 if (switchCheckbox.checked && blockedWebsites.indexOf(hostname) == -1) {
                     blockedWebsites.push(hostname);
                 } else {
-                    blockedWebsites.pop(hostname);
+                    blockedWebsites.splice(blockedWebsites.indexOf(hostname), 1);
                 }
                 chrome.storage.sync.set({'blockedWebsites': {'value' : blockedWebsites}}, function() {});
             });     
