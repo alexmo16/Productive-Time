@@ -32,11 +32,9 @@ chrome.webNavigation.onBeforeNavigate.addListener(function(details) {
         var isProductiveTimeOn = result.time.value != 0;
         if (isProductiveTimeOn) {
             var hostname = (new URL(details.url)).hostname;
-            result.blockedWebsites.value.forEach(function(unProductiveWebsite) {
-                if (hostname == unProductiveWebsite) {
-                    chrome.tabs.remove(details.tabId, function(){});
-                } 
-            });
+            if (result.blockedWebsites.value.includes(hostname)) {
+                chrome.tabs.remove(details.tabId, function(){});
+            }
         }
     });
 });
