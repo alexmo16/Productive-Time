@@ -5,6 +5,7 @@ window.onload = function() {
     var blockLabel = document.getElementById('blockLabel');
     var unblockLabel = document.getElementById('unblockLabel');
     var switchCheckbox = document.getElementById('switchCheckbox');
+    var switchContainer = document.getElementById('switchContainer');
 
     chrome.storage.sync.get(null, function(response) {
         var timeValue = 0;
