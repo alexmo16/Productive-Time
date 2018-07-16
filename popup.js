@@ -1,6 +1,10 @@
 window.onload = function() {
     var startButton = document.getElementById('timerButton');
     var timeInput = document.getElementById('time');
+    var blockContainer = document.getElementById('blockContainer');
+    var blockLabel = document.getElementById('blockLabel');
+    var unblockLabel = document.getElementById('unblockLabel');
+    var switchCheckbox = document.getElementById('switchCheckbox');
 
     chrome.storage.sync.get(null, function(response) {
         
