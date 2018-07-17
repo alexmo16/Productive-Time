@@ -1,4 +1,5 @@
 window.onload = function() {
+
     var startButton = document.getElementById('timerButton');
     var timeInput = document.getElementById('time');
     var blockContainer = document.getElementById('blockContainer');
@@ -21,20 +22,20 @@ window.onload = function() {
                 isBlocked = response.blockedWebsites.value.includes(hostname);
                 switchCheckbox.checked = isBlocked;
                 if (isBlocked) {
-                    hide(blockLabel);
-                    show(unblockLabel);
+                    hideElement(blockLabel);
+                    showElement(unblockLabel);
                 } else {
-                    show(blockLabel);
-                    hide(unblockLabel);
+                    showElement(blockLabel);
+                    hideElement(unblockLabel);
                 }
 
                 var isDisable = response.isDisable ? response.isDisable.value : false;
                 if (isDisable) {
-                    hide(startButton);
-                    hide(blockContainer);
+                    hideElement(startButton);
+                    hideElement(blockContainer);
                 } else {
-                    show(startButton);
-                    show(blockContainer);
+                    showElement(startButton);
+                    showElement(blockContainer);
                 }
             });
         }
@@ -47,8 +48,8 @@ window.onload = function() {
             var buttonStateObject = {'value': true};
             var startTimerObject = {'value': true};
             chrome.storage.sync.set({'time': timeObject, 'isDisable': buttonStateObject, 'startTimer': startTimerObject}, function() {
-                hide(startButton);
-                hide(blockContainer);
+                hideElement(startButton);
+                hideElement(blockContainer);
             });
         }
     };
@@ -77,15 +78,15 @@ window.onload = function() {
             startButton.click();
         }
     });
-    
-    var show = function (elem) {
+
+    var showElement = function (elem) {
         if (elem.classList.contains('hide')) {
             elem.classList.remove('hide');
             elem.disabled = false;
         }
     };
-
-    var hide = function (elem) {
+    
+    var hideElement = function (elem) {
         elem.classList.add('hide');
         elem.disabled = true;
     };
