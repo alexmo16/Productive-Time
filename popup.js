@@ -60,11 +60,17 @@ window.onload = function() {
             chrome.tabs.getSelected(null, function(tab) {
                 var tabUrl = tab.url;
                 var hostname = (new URL(tabUrl)).hostname;
+                
                 if (switchCheckbox.checked && blockedWebsites.indexOf(hostname) == -1) {
                     blockedWebsites.push(hostname);
+                    hideElement(blockLabel);
+                    showElement(unblockLabel);
                 } else {
                     blockedWebsites.splice(blockedWebsites.indexOf(hostname), 1);
+                    hideElement(unblockLabel);
+                    showElement(blockLabel);
                 }
+
                 chrome.storage.sync.set({'blockedWebsites': {'value' : blockedWebsites}}, function() {});
             });     
         });
