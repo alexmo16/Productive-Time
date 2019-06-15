@@ -1,6 +1,6 @@
 {
     "name": "Productive Time",
-    "version": "1.2.1",
+    "version": "1.2.2",
     "description": "Procrastination is over once and for all!",
     "permissions": ["storage", "alarms", "webNavigation", "tabs"],
     "background": {
@@ -16,5 +16,5 @@
     },
     "options_page": "options.html",
     "author": "Alexis Morel",
-    "manifest_version": 2
+    "manifest_version": 3
 }
